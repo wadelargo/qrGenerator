@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Person Identity</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            max-width: 600px;
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch; /* Align items to stretch vertically */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form, .info {
+            width: 48%;
+            padding: 20px;
+            box-sizing: border-box; /* Include padding and border in the width */
+        }
+
+        .form {
+            background-color: #f9f9f9;
+            border-right: 1px solid #ccc;
+        }
+
+        .form div {
+            margin-bottom: 15px;
+        }
+
+        .form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form input[type="number"],
+        .form input[type="text"] {
+            width: calc(100% - 10px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form button:hover {
+            background-color: #45a049;
+        }
+
+        .info {
+            background-color: #e0f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .info h1 {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        .info img#qrcode {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form">
+            <div>
+                <label for="serial_number">Serial Number:</label>
+                <input type="number" id="serial_number">
+            </div>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name">
+            </div>
+            <div>
+                <label for="designation">Designation:</label>
+                <input type="text" id="designation">
+            </div>
+            <div>
+                <button type="button" onclick="generateQR()">Save</button>
+            </div>
+        </div>
+        <div class="info">
+            <img id="qrcode" src="" alt="qrcode">
+            <header id="header"></header>
+            <p id="designationText"></p>
+            <h1>DELEGATE</h1>
+        </div>
+    </div>
+    <script>
+        function generateQR() {
+            var serialNumber = document.getElementById('serial_number').value;
+            var name = document.getElementById('name').value;
+            var designation = document.getElementById('designation').value;
+
+            var qrCodeText = "Serial Number: " + serialNumber + "\nName: " + name + "\nDesignation: " + designation;
+
+            var qrCodeImage = document.getElementById('qrcode');
+            qrCodeImage.src = 'https://api.qrserver.com/v1/create-qr-code/?data=' + encodeURIComponent(qrCodeText);
+
+            var header = document.getElementById('header');
+            header.textContent = name;
+
+            var designationText = document.getElementById('designationText');
+            designationText.textContent = "Designation: " + designation;
+        }
+    </script> 
+</body>
+</html>
